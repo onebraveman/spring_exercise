@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="juggle" class="io.github.onebraveman.lesson2.Juggle">
+        <constructor-arg value="15"></constructor-arg>
+    </bean>
+    <bean id="poem" class="io.github.onebraveman.lesson2.Sonnet29">
+    </bean>
+    <bean id="poeticjuggle" class="io.github.onebraveman.lesson2.PoeticJuggler">
+        <constructor-arg value="10"></constructor-arg>
+        <constructor-arg ref="poem"></constructor-arg>
+    </bean>
+    <bean name="stage" class="io.github.onebraveman.lesson2.Stage" factory-method="getInstance"></bean>
+    <bean name="auditorium" class="io.github.onebraveman.lesson2.Auditorium" init-method="turnOnLights" destroy-method="turnOffLights"></bean>
+
+    <bean name="saxophone" class="io.github.onebraveman.lesson2.Saxophone"></bean>
+    <bean name="piano" class="io.github.onebraveman.lesson2.Piano"></bean>
+    <bean name="instrumentalist" class="io.github.onebraveman.lesson2.Instrumentalist">
+        <property name="song" value="我爱你中国"></property>
+        <!--<property name="instrument" ref="piano"></property>-->
+        <!--私有Bean-->
+        <property name="instrument">
+            <bean class="io.github.onebraveman.lesson2.Saxophone"></bean>
+        </property>
+    </bean>
+    <bean id="kenny" class="io.github.onebraveman.lesson2.Instrumentalist"
+          p:song = "解脱"
+          p:instrument-ref="piano"/>
+    <bean id="hack" class="io.github.onebraveman.lesson2.OneManBand">
+        <property name="instruments">
+            <list>
+                <ref bean="piano"></ref>
+                <ref bean="saxophone"></ref>
+                <ref bean="piano"></ref>
+            </list>
+        </property>
+    </bean>
+    <bean id="newhack" class="io.github.onebraveman.lesson2.NewOneManBand">
+        <property name="instruments">
+            <map>
+                <entry key="piano" value-ref="piano"></entry>
+                <entry key="saxophone" value-ref="saxophone"></entry>
+            </map>
+        </property>
+    </bean>
+</beans>
